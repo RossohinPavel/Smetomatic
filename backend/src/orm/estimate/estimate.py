@@ -4,17 +4,16 @@ from datetime import datetime
 from sqlalchemy import Row, asc, desc, func, select, update
 
 from src.models import Estimate
-from src.schemas import CreateEstimateSchema, EstimatesRequestQuerySchema, UpdateEstimateSchema
-
-from ._base import BaseRepository
+from src.orm._base import BaseRepository
+from src.schemas import EstimatesRequestQuerySchema, UpdateEstimateSchema
 
 
 class EstimateRepository(BaseRepository):
     """Репозиторий для работы с запросами к таблице Estimate"""
 
-    async def create_estimate(self, new_estimate: CreateEstimateSchema, user_id: int) -> Estimate:
+    async def create_estimate(self, user_id: int, title: str) -> Estimate:
         """Создание сметы"""
-        estimate = Estimate(title=new_estimate.title, user_id=user_id)
+        estimate = Estimate(title=title, user_id=user_id)
         self.session.add(estimate)
         await self.session.commit()
         return estimate
@@ -58,3 +57,14 @@ class EstimateRepository(BaseRepository):
         stmt = select(func.count()).select_from(Estimate).where(Estimate.user_id == user_id)
         result = await self.session.scalar(stmt)
         return 0 if result is None else result
+
+    async def renew_estimate_updated_at(self, estimate_id: int, user_id: int):
+        """Обновляет время обновления сметы."""
+        stmt = (
+            update(Estimate)
+            .where(Estimate.id == estimate_id)
+            .where(Estimate.user_id == user_id)
+            .values(updated_at=func.now())
+        )
+        result = await self.session.execute(stmt)
+        return result

@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 
+from src.api.middleware import validate_token
 from src.core import get_base_session
 from src.orm import EstimateRepository
 from src.schemas import (
@@ -12,10 +13,8 @@ from src.schemas import (
     UpdateEstimateSchema,
 )
 
-from .middleware import validate_token
 
-
-router = APIRouter(prefix="/estimate", tags=["estimate"])
+router = APIRouter(prefix="/estimate", tags=["Estimate"])
 
 
 @router.get("/{id}", status_code=200, response_model=EstimateSchema)
@@ -55,7 +54,7 @@ async def create_estimate(
 ):
     """Создание новой сметы"""
     repo = EstimateRepository(session)
-    return await repo.create_estimate(estimate, token.user_id)
+    return await repo.create_estimate(token.user_id, estimate.title)
 
 
 @router.patch("/{id}", status_code=204)

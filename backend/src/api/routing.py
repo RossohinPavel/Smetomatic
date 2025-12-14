@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from .app import router
 from .auth import router as auth_router
-from .estimate import router as estimate_router
+from .estimate import estimate_router
 from .user import router as user_router
 
 
