@@ -1,27 +1,31 @@
+import { RequireAuth } from "../../components/RequireAuth";
 import { useAppContext } from "../../contexts/AppContext/context";
 import { routes } from "../routes";
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import css from "./index.module.scss";
+import { Link } from "react-router-dom";
 
 
-export const ProfilePage = () => {
-  const navigate = useNavigate();
+const Profile = () => {
   const { user, signOut } = useAppContext();
 
-  useEffect(() => {
-    if (user === null) {
-      navigate(routes.getSignInPage());
-    }
-  }, [user, navigate]);
-
   return (
-    user !== null && (
+    user && (
       <>
-        <h2>{user.email}</h2>
+        <h2>{user!.email}</h2>
         <Link to={routes.getAboutPage()}>О приложении</Link>
         <br />
         <button onClick={signOut}>Выйти</button>
       </>
     )
+  );
+};
+
+export const ProfilePage = () => {
+  return (
+    <div className={css["profile-page"]}>
+      <RequireAuth redirectTo={routes.getSignInPage()}>
+        <Profile />
+      </RequireAuth>
+    </div>
   );
 };

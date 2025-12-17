@@ -1,3 +1,4 @@
+import css from "./index.module.scss";
 import { useAppContext } from "../../contexts/AppContext/context";
 import { apiClient } from "../../core/apiClient";
 import { UserAuthSchema } from "../../core/schemas";
@@ -28,7 +29,7 @@ export const SignInPage = () => {
   });
 
   return (
-    <>
+    <div className={css["sign-in-page"]}>
       <Formik
         initialValues={{ email: "", password: "" }}
         validate={withZodSchema(UserAuthSchema) as (v: unknown) => object}
@@ -60,6 +61,6 @@ export const SignInPage = () => {
       <div>
         <Link to={routes.getSignUpPage()}>Регистрация</Link>
       </div>
-    </>
+    </div>
   );
 };

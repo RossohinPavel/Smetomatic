@@ -2,8 +2,9 @@ from collections.abc import Sequence
 from datetime import datetime
 
 from sqlalchemy import Row, asc, desc, func, select, update
+from sqlalchemy.orm import joinedload
 
-from src.models import Estimate
+from src.models import Estimate, Section
 from src.orm._base import BaseRepository
 from src.schemas import EstimatesRequestQuerySchema, UpdateEstimateSchema
 
@@ -34,7 +35,13 @@ class EstimateRepository(BaseRepository):
 
     async def get_estimate(self, estimate_id: int, user_id: int) -> Estimate | None:
         """Получение сметы по ид."""
-        stmt = select(Estimate).where(Estimate.id == estimate_id).where(Estimate.user_id == user_id)
+        stmt = (
+            select(Estimate, Section)
+            .join(Estimate.sections)
+            .options(joinedload(Estimate.sections))
+            .where(Estimate.id == estimate_id)
+            .where(Estimate.user_id == user_id)
+        )
         return await self.session.scalar(stmt)
 
     async def get_estimates(

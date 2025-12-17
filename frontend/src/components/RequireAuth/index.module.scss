@@ -1,0 +1,9 @@
+@import "../../styles/mixins";
+
+.require-auth {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  margin: 1.5rem;
+  justify-content: center;
+}

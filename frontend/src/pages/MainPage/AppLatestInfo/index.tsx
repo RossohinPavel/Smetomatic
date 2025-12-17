@@ -1,4 +1,4 @@
-import { apiClient } from "../../core/apiClient";
+import { apiClient } from "../../../core/apiClient";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -18,7 +18,7 @@ export const AppLatestInfo = () => {
 
   return (
     <div>
-      <h2>Последнее обновлене</h2>
+      <h2>Что нового:</h2>
       <hr />
       <div key={data!.id}>
         <h3>

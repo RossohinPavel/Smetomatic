@@ -1,6 +1,6 @@
-import { EstimateCardMini } from "./EstimateCard";
-import css from "./index.module.scss";
-import { apiClient } from "../../core/apiClient";
+// import css from "./index.module.scss";
+import { EstimateCardMini } from "../../../components/EstimateCard";
+import { apiClient } from "../../../core/apiClient";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -19,7 +19,7 @@ export const LastEditedEstimates = () => {
   }
 
   return (
-    <div className={css.estimates}>
+    <div>
       {data.estimates.map((e) => (
         <EstimateCardMini key={e.id} estimate={e} />
       ))}

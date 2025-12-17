@@ -1,6 +1,7 @@
-@import "../../styles/vars";
 @import "../../styles/mixins";
 
-.estimate-page {
+.sign-in-page {
   @include page-placement;
+
+  margin-top: 1rem;
 }

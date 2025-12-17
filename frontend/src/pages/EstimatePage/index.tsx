@@ -2,13 +2,15 @@ import css from "./index.module.scss";
 import { EstimateBody } from "../../components/Estimate/Body";
 import { EstimateFooter } from "../../components/Estimate/Footer";
 import { EstimateHeader } from "../../components/Estimate/Header";
+import { RequireAuth } from "../../components/RequireAuth";
 import { EstimateContextProvider } from "../../contexts/EstimateContext/provider";
 import { apiClient } from "../../core/apiClient";
+import { routes } from "../routes";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
 
-export const EstimatePage = () => {
+const Estimate = () => {
   const { estimateId } = useParams() as { estimateId: string };
 
   const { data, isLoading, error, isError } = useQuery({
@@ -28,15 +30,23 @@ export const EstimatePage = () => {
   }
 
   return (
+    <EstimateContextProvider data={data}>
+      <div style={{ margin: "1rem" }}>
+        <button>Экспортировать</button>
+      </div>
+      <EstimateHeader />
+      <EstimateBody />
+      <EstimateFooter />
+    </EstimateContextProvider>
+  );
+};
+
+export const EstimatePage = () => {
+  return (
     <div className={css["estimate-page"]}>
-      <EstimateContextProvider data={data}>
-        <div style={{ margin: "1rem" }}>
-          <button>Экспортировать</button>
-        </div>
-        <EstimateHeader />
-        <EstimateBody />
-        <EstimateFooter />
-      </EstimateContextProvider>
+      <RequireAuth redirectTo={routes.getEstimatesPage()}>
+        <Estimate />
+      </RequireAuth>
     </div>
   );
 };

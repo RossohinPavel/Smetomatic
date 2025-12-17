@@ -1,15 +1,17 @@
 import css from "./index.module.scss";
 import { AddEstimateForm } from "../../components/AddEstimateForm";
+import { RequireAuth } from "../../components/RequireAuth";
 import { useAppContext } from "../../contexts/AppContext/context";
 import { apiClient } from "../../core/apiClient";
-import type { UserDataSchemaType } from "../../core/schemas";
 import { routes } from "../routes";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 
-const EstimatesPageData = ({ user }: { user: UserDataSchemaType }) => {
+export const Estimates = () => {
+  const { user } = useAppContext();
+
   const [showForm, setShowForm] = useState<boolean>(false);
 
   const { data, isLoading, error, isError, refetch } = useQuery({
@@ -25,7 +27,7 @@ const EstimatesPageData = ({ user }: { user: UserDataSchemaType }) => {
       return <>Loading...</>;
     }
     return data.estimates.map((estimate) => (
-      <div key={estimate.id} className={css.estimate}>
+      <div key={estimate.id}>
         <h3>
           <NavLink to={routes.getEstimatePage(String(estimate.id))}>{estimate.title}</NavLink>
         </h3>
@@ -36,14 +38,14 @@ const EstimatesPageData = ({ user }: { user: UserDataSchemaType }) => {
 
   return (
     <>
-      <div className={css.actions}>
+      <div>
         <button onClick={() => setShowForm(!showForm)} disabled={showForm}>
           Добавить
         </button>
 
         <button onClick={() => alert("Здесь должен быть функцинал импорта")}>Импорт</button>
       </div>
-      <div className={css["estimates-list"]}>
+      <div>
         {showForm && <AddEstimateForm setShowForm={setShowForm} refetch={refetch} />}
         {estimatesList}
       </div>
@@ -52,15 +54,11 @@ const EstimatesPageData = ({ user }: { user: UserDataSchemaType }) => {
 };
 
 export const EstimatesPage = () => {
-  const { user } = useAppContext();
-
   return (
     <div className={css["estimates-page"]}>
-      {user !== null ? (
-        <EstimatesPageData user={user} />
-      ) : (
-        <>Зарегистрируйтесь, чтобы пользоваться приложением</>
-      )}
+      <RequireAuth>
+        <Estimates />
+      </RequireAuth>
     </div>
   );
 };

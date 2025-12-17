@@ -28,7 +28,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   }, [setUser]);
 
   useEffect(() => {
-    if (user === null && Cookies.get("accessToken")) {
+    if (user === null && Cookies.get("refreshToken")) {
       setUserData();
     }
   }, [user, setUser, setUserData]);

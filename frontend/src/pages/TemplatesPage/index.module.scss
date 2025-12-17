@@ -1,6 +1,5 @@
-@import "../../styles/vars";
 @import "../../styles/mixins";
 
-.estimate-page {
+.template-page {
   @include page-placement;
 }

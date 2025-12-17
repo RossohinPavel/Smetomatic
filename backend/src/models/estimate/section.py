@@ -1,5 +1,5 @@
 from sqlalchemy import ForeignKey, SmallInteger, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.models._base_model import Base
 
@@ -14,3 +14,5 @@ class Section(Base):
     # Информация о разделе
     title: Mapped[str] = mapped_column(String(100), server_default="")
     sort_index: Mapped[int] = mapped_column(SmallInteger(), unique=True, nullable=False)
+    # обратная связь
+    estimate = relationship("Estimate", back_populates="sections")

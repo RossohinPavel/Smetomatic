@@ -2,23 +2,10 @@
 @import "../../styles/mixins";
 
 .main-page {
-  @include common-placement;
+  @include page-placement;
 }
 
 .tabs {
   padding: 1rem;
   gap: 1rem;
-}
-
-.estimates {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.estimate {
-  width: 230px;
-  padding: 0.5rem;
-  border: 1px solid #6e6e6e;
-  border-radius: 5px;
 }
