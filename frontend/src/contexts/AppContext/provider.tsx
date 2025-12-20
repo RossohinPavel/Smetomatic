@@ -3,12 +3,16 @@ import type { AppContextType } from "./types";
 import { apiClient } from "../../core/apiClient";
 import type { UserDataSchemaType } from "../../core/schemas";
 import Cookies from "js-cookie";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<null | UserDataSchemaType>(null);
+
+  const isRefreshTokenExists = useMemo(() => {
+    return !!Cookies.get("refreshToken") || user !== null;
+  }, [user]);
 
   // Получает и устанавливает данные пользователя
   const setUserData = useCallback(() => {
@@ -45,6 +49,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
           user,
           setUserData,
           signOut,
+          isRefreshTokenExists,
         } as AppContextType
       }
     >

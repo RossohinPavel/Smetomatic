@@ -1,3 +1,4 @@
+import css from "./index.module.scss";
 import { apiClient } from "../../../core/apiClient";
 import { useQuery } from "@tanstack/react-query";
 
@@ -17,7 +18,7 @@ export const AppLatestInfo = () => {
   }
 
   return (
-    <div>
+    <div className={css["app-info"]}>
       <h2>Что нового:</h2>
       <hr />
       <div key={data!.id}>

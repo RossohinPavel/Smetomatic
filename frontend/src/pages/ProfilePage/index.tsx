@@ -1,5 +1,6 @@
 import { RequireAuth } from "../../components/RequireAuth";
 import { useAppContext } from "../../contexts/AppContext/context";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { routes } from "../routes";
 import css from "./index.module.scss";
 import { Link } from "react-router-dom";
@@ -7,6 +8,8 @@ import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user, signOut } = useAppContext();
+
+  useDocumentTitle("Профиль");
 
   return (
     user && (

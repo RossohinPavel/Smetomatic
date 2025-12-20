@@ -5,13 +5,15 @@ import { EstimateHeader } from "../../components/Estimate/Header";
 import { RequireAuth } from "../../components/RequireAuth";
 import { EstimateContextProvider } from "../../contexts/EstimateContext/provider";
 import { apiClient } from "../../core/apiClient";
-import { routes } from "../routes";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
 
 const Estimate = () => {
   const { estimateId } = useParams() as { estimateId: string };
+
+  useDocumentTitle("Сметы");
 
   const { data, isLoading, error, isError } = useQuery({
     queryKey: ["estimate", estimateId],
@@ -44,7 +46,7 @@ const Estimate = () => {
 export const EstimatePage = () => {
   return (
     <div className={css["estimate-page"]}>
-      <RequireAuth redirectTo={routes.getEstimatesPage()}>
+      <RequireAuth>
         <Estimate />
       </RequireAuth>
     </div>

@@ -1,20 +1,19 @@
 import { AppLatestInfo } from "./AppLatestInfo";
+import { LastEditedEstimates } from "./Estimates";
 import css from "./index.module.scss";
-import { LastEditedEstimates } from "./LastEditedEstimates";
-import { RequireAuth } from "../../components/RequireAuth";
+import { SignInOrSignUp } from "./SignInOrSignUp";
+import { useAppContext } from "../../contexts/AppContext/context";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 
 export const MainPage = () => {
+  const { isRefreshTokenExists } = useAppContext();
+
+  useDocumentTitle();
+
   return (
     <div className={css["main-page"]}>
-      <RequireAuth>
-        <div className={css.tabs}>
-          <button>Последние</button>
-          <button>Избранные</button>
-        </div>
-        <LastEditedEstimates />
-        <hr />
-      </RequireAuth>
+      {isRefreshTokenExists ? <LastEditedEstimates /> : <SignInOrSignUp />}
       <AppLatestInfo />
     </div>
   );

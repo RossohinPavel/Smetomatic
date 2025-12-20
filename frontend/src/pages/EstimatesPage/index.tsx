@@ -1,18 +1,19 @@
 import css from "./index.module.scss";
-import { AddEstimateForm } from "../../components/AddEstimateForm";
 import { RequireAuth } from "../../components/RequireAuth";
 import { useAppContext } from "../../contexts/AppContext/context";
 import { apiClient } from "../../core/apiClient";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { routes } from "../routes";
+import { Actions } from "./Actions";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { NavLink } from "react-router-dom";
 
 
 export const Estimates = () => {
   const { user } = useAppContext();
 
-  const [showForm, setShowForm] = useState<boolean>(false);
+  useDocumentTitle("Сметы");
 
   const { data, isLoading, error, isError, refetch } = useQuery({
     queryKey: ["estimates", user],
@@ -38,17 +39,8 @@ export const Estimates = () => {
 
   return (
     <>
-      <div>
-        <button onClick={() => setShowForm(!showForm)} disabled={showForm}>
-          Добавить
-        </button>
-
-        <button onClick={() => alert("Здесь должен быть функцинал импорта")}>Импорт</button>
-      </div>
-      <div>
-        {showForm && <AddEstimateForm setShowForm={setShowForm} refetch={refetch} />}
-        {estimatesList}
-      </div>
+      <Actions refetch={refetch} />
+      {estimatesList}
     </>
   );
 };

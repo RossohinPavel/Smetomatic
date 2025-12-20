@@ -1,5 +1,6 @@
 import { InfoForm } from "../../components/InfoForm";
 import { apiClient } from "../../core/apiClient";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -8,6 +9,8 @@ export const AboutPage = () => {
     queryKey: ["appUpdates"],
     queryFn: apiClient.getAppUpdates,
   });
+
+  useDocumentTitle("О приложении");
 
   if (isLoading || data === undefined) {
     return <>Loading...</>;

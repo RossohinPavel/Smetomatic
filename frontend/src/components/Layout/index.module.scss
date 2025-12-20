@@ -13,6 +13,14 @@
       color: $excel-green;
       background-color: $excel-white;
     }
+
+    .disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+      text-decoration: none;
+      color: $escel-transparent-white !important;
+    }
   }
 
   .side > * {

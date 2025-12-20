@@ -2,6 +2,7 @@ import css from "./index.module.scss";
 import { useAppContext } from "../../contexts/AppContext/context";
 import { apiClient } from "../../core/apiClient";
 import { UserAuthSchema } from "../../core/schemas";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { routes } from "../routes";
 import { useMutation } from "@tanstack/react-query";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -12,6 +13,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const SignInPage = () => {
   const [error, setError] = useState<string | null>(null);
+
+  useDocumentTitle("Авторизация");
 
   const navigate = useNavigate();
 
