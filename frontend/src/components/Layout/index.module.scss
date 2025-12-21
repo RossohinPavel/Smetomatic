@@ -1,17 +1,17 @@
-@import "../../styles/vars";
+@use "../../styles/vars";
 
 .layout {
   display: flex;
   justify-content: space-between;
-  background-color: $excel-green;
+  background-color: vars.$excel-green;
   padding: 0.5rem 0.5rem 0;
 
   .side {
     display: flex;
 
     .link-active {
-      color: $excel-green;
-      background-color: $excel-white;
+      color: vars.$excel-green;
+      background-color: vars.$excel-white;
     }
 
     .disabled {
@@ -19,7 +19,7 @@
       cursor: not-allowed;
       pointer-events: none;
       text-decoration: none;
-      color: $escel-transparent-white !important;
+      color: vars.$escel-transparent-white !important;
     }
   }
 
@@ -29,12 +29,6 @@
 
   a {
     font-weight: bolder;
-    color: $excel-white;
+    color: vars.$excel-white;
   }
-}
-
-.page-container {
-  // display: flex;
-  // flex-direction: column;
-  width: 1200px;
 }

@@ -1,0 +1,12 @@
+@use "../../../styles/vars";
+
+.popup {
+  position: absolute;
+  z-index: 999;
+  top: 45px;
+  right: 0;
+  color: vars.$excel-white;
+  background: vars.$excel-green;
+  min-width: 240px;
+  max-width: 240px;
+}

@@ -3,11 +3,10 @@ import { useAppContext } from "../../contexts/AppContext/context";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { routes } from "../routes";
 import css from "./index.module.scss";
-import { Link } from "react-router-dom";
 
 
 const Profile = () => {
-  const { user, signOut } = useAppContext();
+  const { user } = useAppContext();
 
   useDocumentTitle("Профиль");
 
@@ -15,9 +14,6 @@ const Profile = () => {
     user && (
       <>
         <h2>{user!.email}</h2>
-        <Link to={routes.getAboutPage()}>О приложении</Link>
-        <br />
-        <button onClick={signOut}>Выйти</button>
       </>
     )
   );

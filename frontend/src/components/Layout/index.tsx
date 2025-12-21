@@ -1,4 +1,5 @@
 import css from "./index.module.scss";
+import { PopupMenu } from "./Popup";
 import { useAppContext } from "../../contexts/AppContext/context";
 import { routes } from "../../pages";
 import { useCallback, useMemo } from "react";
@@ -32,15 +33,7 @@ export const Layout = () => {
           </NavLink>
         </div>
         <div className={css.side}>
-          {user === null ? (
-            <NavLink to={routes.getSignInPage()} className={getActiveStyle}>
-              Войти
-            </NavLink>
-          ) : (
-            <NavLink to={routes.getProfilePage()} className={getActiveStyle}>
-              {user.email}
-            </NavLink>
-          )}
+          <PopupMenu user={user} />
         </div>
       </div>
       <Outlet />

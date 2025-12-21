@@ -1,3 +1,4 @@
+import css from "./index.module.scss";
 import { InfoForm } from "../../components/InfoForm";
 import { apiClient } from "../../core/apiClient";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
@@ -21,7 +22,7 @@ export const AboutPage = () => {
   }
 
   return (
-    <div>
+    <div className={css["about-page"]}>
       <InfoForm />
       <hr />
       <h2>Последние обновления приложения</h2>

@@ -1,0 +1,22 @@
+.auth-menu {
+  display: flex;
+  flex-direction: column;
+  /* stylelint-disable */
+  :global(.popup-form) > * {
+    /* stylelint-enable */
+    margin-bottom: 0.5rem;
+  }
+
+  /* stylelint-disable */
+  :global(.email-block),
+  :global(.password-block) {
+    /* stylelint-enable */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .regq {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
