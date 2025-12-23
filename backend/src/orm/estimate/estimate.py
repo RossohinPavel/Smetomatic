@@ -37,7 +37,7 @@ class EstimateRepository(BaseRepository):
         """Получение сметы по ид."""
         stmt = (
             select(Estimate, Section)
-            .join(Estimate.sections)
+            .join(Estimate.sections, isouter=True)
             .options(joinedload(Estimate.sections))
             .where(Estimate.id == estimate_id)
             .where(Estimate.user_id == user_id)

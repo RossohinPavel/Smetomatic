@@ -1,5 +1,5 @@
-@import "../../styles/mixins";
+@use "../../styles/mixins";
 
 .profile-page {
-  @include page-placement;
+  @include mixins.page-placement;
 }

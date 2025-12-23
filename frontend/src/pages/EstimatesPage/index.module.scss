@@ -1,4 +1,4 @@
-@import "../../styles/mixins";
+@use "../../styles/mixins";
 
 .actions {
   display: flex;
@@ -14,7 +14,7 @@
 }
 
 .estimates-page {
-  @include page-placement;
+  @include mixins.page-placement;
 }
 
 .estimate {

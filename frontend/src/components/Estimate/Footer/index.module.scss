@@ -1,4 +1,4 @@
-@import "../../../styles/vars";
+@use "../../../styles/vars";
 
 @mixin strech-param {
   flex: 0 0 auto;
@@ -27,14 +27,14 @@
   .line-total {
     @include line;
 
-    color: $excel-white;
-    background-color: $excel-green;
+    color: vars.$excel-white;
+    background-color: vars.$excel-green;
   }
 
   .line {
     @include line;
 
-    background-color: $excel-light-green;
+    background-color: vars.$excel-light-green;
   }
 
   .name {

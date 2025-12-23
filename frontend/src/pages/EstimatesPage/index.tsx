@@ -41,6 +41,13 @@ export const Estimates = () => {
     <>
       <Actions refetch={refetch} />
       {estimatesList}
+      <hr />
+      <div>
+        <button>{"<"}</button>
+        <button>{"1"}</button>
+        <button>{"2"}</button>
+        <button>{">"}</button>
+      </div>
     </>
   );
 };
