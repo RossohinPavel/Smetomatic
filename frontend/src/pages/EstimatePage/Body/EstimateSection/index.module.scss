@@ -4,10 +4,10 @@
   flex: 0 0 auto;
 }
 
-@mixin flex-param {
+@mixin flex-param($jst-cnt-value: center) {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: $jst-cnt-value;
 }
 
 @mixin stroke {
@@ -51,7 +51,7 @@
     background-color: vars.$excel-green;
 
     .section-amount {
-      @include flex-param;
+      @include flex-param(left);
       @include stroke;
 
       width: 100%;
@@ -63,6 +63,16 @@
       @include stroke;
 
       width: 178px;
+
+      :first-child,
+      :last-child {
+        width: 50%;
+      }
+
+      :last-child {
+        display: flex;
+        justify-content: center;
+      }
     }
 
     .total-amount {

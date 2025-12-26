@@ -1,22 +1,25 @@
 import css from "./index.module.scss";
+import { AutoSaveInput } from "../../../components/AutoSaveInput";
 import { useEstimateContext } from "../../../contexts/EstimateContext/context";
 import { apiClient } from "../../../core/apiClient";
-import { AutoSaveInput } from "../../AutoSaveInput";
 import { useCallback } from "react";
 
 
 export const EstimateHeader = () => {
-  const { estimate } = useEstimateContext();
+  const { estimate, renewUpdatedAt } = useEstimateContext();
 
   const updateEstimateInfo = useCallback(
     (key: string, value: unknown) => {
       const data = { [key]: value };
       apiClient
         .updateEstimate(estimate.id, data)
-        .then(() => console.info("Attr updated", data))
+        .then(() => {
+          console.info("Attr updated", data);
+          renewUpdatedAt();
+        })
         .catch((err) => console.error(err));
     },
-    [estimate.id]
+    [estimate.id, renewUpdatedAt]
   );
 
   return (

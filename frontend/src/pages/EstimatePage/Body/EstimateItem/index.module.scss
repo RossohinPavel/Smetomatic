@@ -2,10 +2,10 @@
   flex: 0 0 auto;
 }
 
-@mixin flex-param {
+@mixin flex-param($jst-cnt-value: center) {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: $jst-cnt-value;
 }
 
 @mixin stroke {
@@ -27,7 +27,7 @@
   }
 
   .name {
-    @include flex-param;
+    @include flex-param(left);
     @include stroke;
 
     width: 100%;

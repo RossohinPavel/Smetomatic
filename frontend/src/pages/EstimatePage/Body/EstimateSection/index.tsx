@@ -21,8 +21,14 @@ export const EstimateSection = () => {
       <EstimateItem />
       <div className={css.footer}>
         <div className={css["section-amount"]}>Итого по разделу</div>
-        <div className={css["material-amount"]}>10</div>
-        <div className={css["material-amount"]}>14</div>
+        <div className={css["material-amount"]}>
+          <div></div>
+          <div>10</div>
+        </div>
+        <div className={css["material-amount"]}>
+          <div></div>
+          <div>14</div>
+        </div>
         <div className={css["total-amount"]}>16</div>
         <div className={css["total-amount"]}>Примечания</div>
       </div>

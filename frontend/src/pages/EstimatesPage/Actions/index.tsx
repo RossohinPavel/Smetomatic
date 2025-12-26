@@ -9,9 +9,8 @@ export const Actions = ({ refetch }: { refetch: () => void }) => {
   return (
     <div className={css.actions}>
       <button onClick={() => setShowForm(!showForm)} disabled={showForm}>
-        Добавить
+        Новая
       </button>
-      <button onClick={() => alert("Здесь должен быть функцинал импорта")}>Импорт</button>
       {showForm && <AddEstimateForm setShowForm={setShowForm} refetch={refetch} />}
     </div>
   );

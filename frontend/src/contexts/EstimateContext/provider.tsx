@@ -1,10 +1,14 @@
 import { EstimateContext } from "./context";
 import type { EstimateContextType, EstimateProviderProps } from "./types";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 
 export const EstimateContextProvider = ({ data, children }: EstimateProviderProps) => {
   const [estimate, setEstimate] = useState(data);
+
+  const renewUpdatedAt = useCallback(() => {
+    setEstimate({ ...estimate, updatedAt: new Date() });
+  }, [estimate, setEstimate]);
 
   return (
     <EstimateContext.Provider
@@ -12,6 +16,7 @@ export const EstimateContextProvider = ({ data, children }: EstimateProviderProp
         {
           estimate,
           setEstimate,
+          renewUpdatedAt,
         } as EstimateContextType
       }
     >

@@ -37,6 +37,7 @@ const AutoSaveInputC = <T extends InputType, K extends object>(props: PropsI<T, 
   return (
     <input
       type={type === undefined ? "text" : type}
+      name={attr as string}
       className={className}
       defaultValue={initialValue as string}
       onChange={onChange}

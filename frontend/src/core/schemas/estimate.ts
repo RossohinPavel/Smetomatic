@@ -1,3 +1,4 @@
+import { SectionSchema } from "./section";
 import z from "zod";
 
 
@@ -15,6 +16,11 @@ export const EstimateSchema = z.object({
   basedOn: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
+  materialsOverhead: z.number(),
+  workOverhead: z.number(),
+  materialsDiscount: z.number(),
+  workDiscount: z.number(),
+  sections: z.array(SectionSchema),
 });
 
 export type EstimateSchemaType = z.infer<typeof EstimateSchema>;

@@ -4,8 +4,3 @@
 .main-page {
   @include mixins.page-placement;
 }
-
-.tabs {
-  padding: 1rem;
-  gap: 1rem;
-}

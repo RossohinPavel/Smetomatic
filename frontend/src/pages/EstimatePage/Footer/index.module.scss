@@ -4,10 +4,10 @@
   flex: 0 0 auto;
 }
 
-@mixin flex-param {
+@mixin flex-param($jst-cnt: center) {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: $jst-cnt;
 }
 
 @mixin stroke {
@@ -23,6 +23,7 @@
 
 .estimate-footer {
   margin-top: 0.5rem;
+  padding-bottom: 2rem;
 
   .line-total {
     @include line;
@@ -38,7 +39,7 @@
   }
 
   .name {
-    @include flex-param;
+    @include flex-param(left);
     @include stroke;
 
     width: 100%;

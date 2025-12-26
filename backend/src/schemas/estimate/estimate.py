@@ -3,6 +3,8 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
 
+from .section import SectionSchema
+
 
 class EstimateLESchema(BaseModel):
     """JSON - схема для списочного ответа по информации схемам."""
@@ -21,6 +23,11 @@ class EstimateSchema(EstimateLESchema):
     project: str
     based_on: str = Field(alias="basedOn")
     created_at: datetime = Field(alias="createdAt")
+    materials_overhead: int = Field(alias="materialsOverhead")
+    work_overhead: int = Field(alias="workOverhead")
+    materials_discount: int = Field(alias="materialsDiscount")
+    work_discount: int = Field(alias="workDiscount")
+    sections: list[SectionSchema]
 
 
 class UpdateEstimateSchema(BaseModel):

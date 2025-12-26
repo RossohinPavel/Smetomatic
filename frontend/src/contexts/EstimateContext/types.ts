@@ -10,4 +10,5 @@ export interface EstimateProviderProps {
 export interface EstimateContextType {
   estimate: EstimateSchemaType;
   setEstimate: (estimate: EstimateSchemaType) => void;
+  renewUpdatedAt: () => void;
 }

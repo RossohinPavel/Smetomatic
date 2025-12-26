@@ -1,7 +1,8 @@
+import { Actions } from "./Actions";
+import { EstimateBody } from "./Body";
+import { EstimateFooter } from "./Footer";
+import { EstimateHeader } from "./Header";
 import css from "./index.module.scss";
-import { EstimateBody } from "../../components/Estimate/Body";
-import { EstimateFooter } from "../../components/Estimate/Footer";
-import { EstimateHeader } from "../../components/Estimate/Header";
 import { RequireAuth } from "../../components/RequireAuth";
 import { EstimateContextProvider } from "../../contexts/EstimateContext/provider";
 import { apiClient } from "../../core/apiClient";
@@ -33,9 +34,7 @@ const Estimate = () => {
 
   return (
     <EstimateContextProvider data={data}>
-      <div style={{ margin: "1rem" }}>
-        <button>Экспортировать</button>
-      </div>
+      <Actions />
       <EstimateHeader />
       <EstimateBody />
       <EstimateFooter />
