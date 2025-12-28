@@ -1,5 +1,5 @@
 import css from "./index.module.scss";
-import { AutoSaveInput } from "../../../components/AutoSaveInput";
+import { DebouncedChangeField } from "../../../components/DebouncedChangeField";
 import { useEstimateContext } from "../../../contexts/EstimateContext/context";
 import { apiClient } from "../../../core/apiClient";
 import { useCallback } from "react";
@@ -26,11 +26,18 @@ export const EstimateHeader = () => {
     <div className={css["estimate-header"]}>
       <div className={css.about}>
         <div>О смете</div>
-        <textarea
-          className={css.textarea}
-          placeholder="Тут обычно бывает: Приложение к договору № 12345 от 1.2.2025"
-          disabled
-        />
+        <DebouncedChangeField
+          attr="description"
+          value={estimate.description}
+          callback={updateEstimateInfo}
+        >
+          <textarea
+            className={css.textarea}
+            placeholder="Тут обычно бывает: Приложение к договору № 12345 от 1.2.2025"
+            cols={2}
+            maxLength={65}
+          />
+        </DebouncedChangeField>
       </div>
       <div className={css["agree-approved"]}>
         <div className={css.line}>
@@ -45,15 +52,29 @@ export const EstimateHeader = () => {
       <div>
         <div className={css.meta}>
           <div>Смета</div>
-          <AutoSaveInput type="text" item={estimate} attr="title" onSave={updateEstimateInfo} />
+          <DebouncedChangeField attr="title" value={estimate.title} callback={updateEstimateInfo}>
+            <input />
+          </DebouncedChangeField>
         </div>
         <div className={css.meta}>
           <div>Объект</div>
-          <AutoSaveInput type="text" item={estimate} attr="project" onSave={updateEstimateInfo} />
+          <DebouncedChangeField
+            attr="project"
+            value={estimate.project}
+            callback={updateEstimateInfo}
+          >
+            <input />
+          </DebouncedChangeField>
         </div>
         <div className={css.meta}>
           <div>Основание</div>
-          <AutoSaveInput type="text" item={estimate} attr="basedOn" onSave={updateEstimateInfo} />
+          <DebouncedChangeField
+            attr="basedOn"
+            value={estimate.basedOn}
+            callback={updateEstimateInfo}
+          >
+            <input />
+          </DebouncedChangeField>
         </div>
         <div className={css.meta}>
           <div>Сметная стоимость</div>

@@ -13,6 +13,6 @@ class Section(Base):
     estimate_id: Mapped[int] = mapped_column(ForeignKey("Estimates.id", ondelete="CASCADE"))
     # Информация о разделе
     title: Mapped[str] = mapped_column(String(100), server_default="")
-    sort_index: Mapped[int] = mapped_column(SmallInteger(), unique=True, nullable=False)
+    sort_index: Mapped[int] = mapped_column(SmallInteger(), server_default="0")
     # обратная связь
     estimate = relationship("Estimate", back_populates="sections")

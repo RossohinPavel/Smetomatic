@@ -9,8 +9,8 @@ export const EstimateBody = () => {
   const { estimate } = useEstimateContext();
 
   const sections = useMemo(() => {
-    return estimate.sections.map(() => <EstimateSection />);
-  }, [estimate.sections]);
+    return estimate.sections.map((s) => <EstimateSection key={s.id} />);
+  }, [estimate]);
 
   return (
     <div className={css["estimate-body"]}>

@@ -1,12 +1,20 @@
 import type { RequestPropsType, PostRequestPropsType, GetRequestPropsType } from "./types";
 import { config } from "../config";
-import { EstimateSchema, InfoSchema, TokensArraySchema, UserDataSchema } from "../schemas";
+import {
+  EstimateSchema,
+  InfoSchema,
+  SectionSchema,
+  TokensArraySchema,
+  UserDataSchema,
+} from "../schemas";
 import type {
   CreateEstimateSchemaType,
   CreateInfoSchemaType,
+  CreateSectionSchemaType,
   CreateUserSchemaType,
   EstimateSchemaType,
   InfoSchemaType,
+  SectionSchemaType,
   UpdateEstimateSchemaType,
   UserAuthSchemaType,
   UserDataSchemaType,
@@ -144,19 +152,27 @@ export const createApiClient = (baseUrl: string) => {
     return get({ endpoint: "api/estimate/", schema: EstimateListResponseSchema, auth: true });
   };
 
+  // Создание сметы.
   const createEstimate = async (data: CreateEstimateSchemaType): Promise<EstimateSchemaType> => {
     return post({ endpoint: "api/estimate/", body: data, schema: EstimateSchema, auth: true });
   };
 
+  // Получение сметы.
   const getEstimate = async (id: string | number): Promise<EstimateSchemaType> => {
     return get({ endpoint: `api/estimate/${id}`, schema: EstimateSchema, auth: true });
   };
 
+  // Обновление сметы.
   const updateEstimate = async (
     id: string | number,
     data: UpdateEstimateSchemaType
   ): Promise<void> => {
     return path({ endpoint: `api/estimate/${id}`, body: data, auth: true });
+  };
+
+  // Создание раздела.
+  const createSection = async (data: CreateSectionSchemaType): Promise<SectionSchemaType> => {
+    return post({ endpoint: "api/section/", body: data, schema: SectionSchema, auth: true });
   };
 
   return {
@@ -171,6 +187,7 @@ export const createApiClient = (baseUrl: string) => {
     createEstimate,
     getEstimate,
     updateEstimate,
+    createSection,
   };
 };
 

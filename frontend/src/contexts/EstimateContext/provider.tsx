@@ -7,8 +7,8 @@ export const EstimateContextProvider = ({ data, children }: EstimateProviderProp
   const [estimate, setEstimate] = useState(data);
 
   const renewUpdatedAt = useCallback(() => {
-    setEstimate({ ...estimate, updatedAt: new Date() });
-  }, [estimate, setEstimate]);
+    setEstimate((prev) => ({ ...prev, updatedAt: new Date() }));
+  }, []);
 
   return (
     <EstimateContext.Provider
