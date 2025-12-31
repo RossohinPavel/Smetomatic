@@ -1,4 +1,4 @@
-from sqlalchemy import insert, literal, select
+from sqlalchemy import delete, insert, literal, select
 
 from src.models import Estimate, Section
 from src.orm._base import BaseRepository
@@ -30,3 +30,17 @@ class SectionRepository(BaseRepository):
             await estimate_repo.renew_estimate_updated_at(data.estimate_id, user_id)
             await self.session.commit()
         return section
+
+    async def delete_section(self, user_id: int, section_id: int) -> int:
+        """Удаление раздела сметы"""
+        stmt = (
+            delete(Section)
+            .where(Section.id == section_id)
+            .where(Section.estimate_id == Estimate.id)
+            .where(Estimate.user_id == user_id)
+        )
+        result = await self.session.execute(stmt)
+        rowcount: int = result.rowcount  # type: ignore
+        if rowcount > 0:
+            await self.session.commit()
+        return rowcount

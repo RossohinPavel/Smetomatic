@@ -21,3 +21,14 @@ async def create_section(
     if section is None:
         raise HTTPException(400)
     return section
+
+
+@router.delete("/{id}", status_code=204)
+async def delete_section(
+    id: int, token: TokenDataSchema = Depends(validate_token()), session=Depends(get_base_session)
+):
+    """Удаление раздела сметы"""
+    repo = SectionRepository(session)
+    result = await repo.delete_section(token.user_id, id)
+    if not result:
+        raise HTTPException(404, "Section not found.")

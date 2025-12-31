@@ -3,7 +3,7 @@ import type { AppContextType } from "./types";
 import { apiClient } from "../../core/apiClient";
 import type { UserDataSchemaType } from "../../core/schemas";
 import Cookies from "js-cookie";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
 
@@ -29,18 +29,16 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
           console.error(error);
         }
       });
-  }, [setUser]);
+  }, []);
 
-  useEffect(() => {
-    if (user === null && Cookies.get("refreshToken")) {
-      setUserData();
-    }
-  }, [user, setUser, setUserData]);
+  if (user === null && Cookies.get("refreshToken")) {
+    setUserData();
+  }
 
   const signOut = useCallback(() => {
     setUser(null);
     apiClient.signOut();
-  }, [setUser]);
+  }, []);
 
   return (
     <AppContext.Provider

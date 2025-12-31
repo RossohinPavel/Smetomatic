@@ -23,8 +23,10 @@ class EstimateRepository(BaseRepository):
         """Удаление сметы"""
         stmt = delete(Estimate).where(Estimate.id == estimate_id).where(Estimate.user_id == user_id)
         result = await self.session.execute(stmt)
-        await self.session.commit()
-        return result.rowcount  # type: ignore
+        rowcount: int = result.rowcount  # type: ignore
+        if rowcount:
+            await self.session.commit()
+        return rowcount
 
     async def update_estimate(
         self, estimate_id: int, user_id: int, estimate: UpdateEstimateSchema
@@ -37,8 +39,10 @@ class EstimateRepository(BaseRepository):
             .values(**estimate.get_initialized_fields())
         )
         result = await self.session.execute(stmt)
-        await self.session.commit()
-        return result.rowcount  # type: ignore
+        rowcount: int = result.rowcount  # type: ignore
+        if rowcount:
+            await self.session.commit()
+        return rowcount
 
     async def get_estimate(self, estimate_id: int, user_id: int) -> Estimate | None:
         """Получение сметы по ид."""
