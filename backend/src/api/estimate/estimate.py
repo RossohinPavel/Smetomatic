@@ -71,3 +71,14 @@ async def update_estimate(
     result = await repo.update_estimate(id, token.user_id, estimate)
     if not result:
         raise HTTPException(404, "Not found.")
+
+
+@router.delete("/{id}", status_code=204)
+async def delete_estimate(
+    id: int, token: TokenDataSchema = Depends(validate_token()), session=Depends(get_base_session)
+):
+    """Удаление сметы"""
+    repo = EstimateRepository(session)
+    result = await repo.delete_estimate(id, token.user_id)
+    if not result:
+        raise HTTPException(404, "Not found.")

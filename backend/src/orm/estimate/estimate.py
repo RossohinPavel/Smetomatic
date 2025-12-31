@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from datetime import datetime
 
-from sqlalchemy import Row, asc, desc, func, select, update
+from sqlalchemy import Row, asc, delete, desc, func, select, update
 from sqlalchemy.orm import joinedload
 
 from src.models import Estimate, Section
@@ -18,6 +18,13 @@ class EstimateRepository(BaseRepository):
         self.session.add(estimate)
         await self.session.commit()
         return estimate
+
+    async def delete_estimate(self, estimate_id: int, user_id: int) -> int:
+        """Удаление сметы"""
+        stmt = delete(Estimate).where(Estimate.id == estimate_id).where(Estimate.user_id == user_id)
+        result = await self.session.execute(stmt)
+        await self.session.commit()
+        return result.rowcount  # type: ignore
 
     async def update_estimate(
         self, estimate_id: int, user_id: int, estimate: UpdateEstimateSchema

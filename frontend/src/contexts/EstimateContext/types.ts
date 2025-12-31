@@ -18,5 +18,6 @@ export interface EstimateContextType extends EstimateSchemaType {
   totalAmount: number;
   isSectionsExists: boolean;
   updateEstimate: UpdateEstimate;
+  deleteEstimate: () => void;
   addSection: () => void;
 }

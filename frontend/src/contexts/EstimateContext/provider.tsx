@@ -72,6 +72,17 @@ export const EstimateContextProvider = ({ data, children }: EstimateProviderProp
     [id]
   );
 
+  const deleteEstimate = useCallback(() => {
+    apiClient
+      .deleteEstimate(id)
+      .then(() => {
+        console.info(`Estimate ${id} successfuly deleted.`);
+      })
+      .catch(() => {
+        console.info(`Estimate ${id} deletion failed.`);
+      });
+  }, [id]);
+
   const addSection = useCallback(() => {
     const section: SectionSchemaType = {
       id: -1,
@@ -118,6 +129,7 @@ export const EstimateContextProvider = ({ data, children }: EstimateProviderProp
         totalAmount,
         isSectionsExists,
         updateEstimate,
+        deleteEstimate,
         addSection,
       }}
     >

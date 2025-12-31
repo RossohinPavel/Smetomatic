@@ -1,4 +1,9 @@
-import type { RequestPropsType, PostRequestPropsType, GetRequestPropsType } from "./types";
+import type {
+  RequestPropsType,
+  PostRequestPropsType,
+  GetRequestPropsType,
+  DeleteRequestPropsType,
+} from "./types";
 import { config } from "../config";
 import {
   EstimateSchema,
@@ -10,7 +15,6 @@ import {
 import type {
   CreateEstimateSchemaType,
   CreateInfoSchemaType,
-  CreateSectionSchemaType,
   CreateUserSchemaType,
   EstimateSchemaType,
   InfoSchemaType,
@@ -106,6 +110,10 @@ export const createApiClient = (baseUrl: string) => {
     return request(props, { method: "PATCH" });
   };
 
+  const del = async <T>(props: DeleteRequestPropsType<T>): Promise<T> => {
+    return request(props, { method: "DELETE" });
+  };
+
   // Возвращает последнюю запись информации о приложении.
   const getAppLatestUpdate = async (): Promise<InfoSchemaType> => {
     return get({ endpoint: "info/latest", schema: InfoSchema });
@@ -170,8 +178,13 @@ export const createApiClient = (baseUrl: string) => {
     return path({ endpoint: `api/estimate/${id}`, body: data, auth: true });
   };
 
+  // Удаление сметы.
+  const deleteEstimate = async (id: string | number) => {
+    return del({ endpoint: `api/estimate/${id}`, auth: true });
+  };
+
   // Создание раздела.
-  const createSection = async (data: CreateSectionSchemaType): Promise<SectionSchemaType> => {
+  const createSection = async (data: SectionSchemaType): Promise<SectionSchemaType> => {
     return post({ endpoint: "api/section/", body: data, schema: SectionSchema, auth: true });
   };
 
@@ -187,6 +200,7 @@ export const createApiClient = (baseUrl: string) => {
     createEstimate,
     getEstimate,
     updateEstimate,
+    deleteEstimate,
     createSection,
   };
 };
