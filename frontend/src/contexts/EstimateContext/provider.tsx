@@ -1,25 +1,24 @@
 import { EstimateContext } from "./context";
 import type { EstimateProviderProps, UpdateEstimate } from "./types";
 import { apiClient } from "../../core/apiClient";
-import type { SectionSchemaType } from "../../core/schemas";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 
-export const EstimateContextProvider = ({ data, children }: EstimateProviderProps) => {
+export const EstimateContextProvider = ({ estimate, children }: EstimateProviderProps) => {
   // Неизменяемы атрибуты
-  const id = data.id;
-  const createdAt = data.createdAt;
+  const id = estimate.id;
+  const createdAt = estimate.createdAt;
   // Изменяемые атрибуты
-  const [title, setTitle] = useState(data.title);
-  const [description, setDescription] = useState(data.description);
-  const [project, setProject] = useState(data.project);
-  const [basedOn, setBasedOn] = useState(data.basedOn);
-  const [updatedAt, setUpdatedAt] = useState(data.updatedAt);
-  const [materialsOverhead, setMaterialsOverhead] = useState(data.materialsOverhead);
-  const [workOverhead, setWorkOverhead] = useState(data.workOverhead);
-  const [materialsDiscount, setMaterialsDiscount] = useState(data.materialsDiscount);
-  const [workDiscount, setWorkDiscount] = useState(data.workDiscount);
-  const [sections, setSections] = useState(data.sections);
+  const [title, setTitle] = useState(estimate.title);
+  const [description, setDescription] = useState(estimate.description);
+  const [project, setProject] = useState(estimate.project);
+  const [basedOn, setBasedOn] = useState(estimate.basedOn);
+  const [updatedAt, setUpdatedAt] = useState(estimate.updatedAt);
+  const [materialsOverhead, setMaterialsOverhead] = useState(estimate.materialsOverhead);
+  const [workOverhead, setWorkOverhead] = useState(estimate.workOverhead);
+  const [materialsDiscount, setMaterialsDiscount] = useState(estimate.materialsDiscount);
+  const [workDiscount, setWorkDiscount] = useState(estimate.workDiscount);
+  const [sections, setSections] = useState(estimate.sections);
   // Вычисляемые атрибуты
   const totalAmount = useMemo(() => 0, []);
   const [isSectionsExists, setIsSectionsExists] = useState<boolean>(false);
@@ -84,12 +83,7 @@ export const EstimateContextProvider = ({ data, children }: EstimateProviderProp
   }, [id]);
 
   const addSection = useCallback(() => {
-    const section: SectionSchemaType = {
-      id: -1,
-      estimateId: id,
-      title: "Новый раздел",
-      sortIndex: 0,
-    };
+    const section = { id: -1, estimateId: id, title: "Новый раздел", sortIndex: 0 };
     setSections((prev) => {
       section.sortIndex = prev.length;
       return [...prev, section];
@@ -111,6 +105,18 @@ export const EstimateContextProvider = ({ data, children }: EstimateProviderProp
       });
   }, [id]);
 
+  const deleteSection = useCallback((id: number) => {
+    setSections((prev) => prev.filter((s) => s.id !== id));
+    apiClient
+      .deleteSection(id)
+      .then(() => {
+        console.info(`Section id=`, id, `was deleted`);
+      })
+      .catch((e) => {
+        console.warn(e);
+      });
+  }, []);
+
   return (
     <EstimateContext.Provider
       value={{
@@ -131,6 +137,7 @@ export const EstimateContextProvider = ({ data, children }: EstimateProviderProp
         updateEstimate,
         deleteEstimate,
         addSection,
+        deleteSection,
       }}
     >
       {children}

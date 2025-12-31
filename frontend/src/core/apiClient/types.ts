@@ -13,6 +13,9 @@ export type RequestPropsType<T> = {
 
 export type GetRequestPropsType<T> = Omit<RequestPropsType<T>, "body">;
 
-export type DeleteRequestPropsType<T> = Omit<RequestPropsType<T>, "body" | "schema">;
+export type DeleteRequestPropsType = {
+  endpoint: string;
+  auth?: boolean;
+};
 
 export type PostRequestPropsType<T> = RequestPropsType<T> & { body: BodyType };

@@ -1,5 +1,5 @@
-import { EstimateSection } from "./EstimateSection";
 import css from "./index.module.scss";
+import { Section } from "./Section";
 import { TableHeader } from "./TableHeader";
 import { useEstimateContext } from "../../../contexts/EstimateContext/context";
 
@@ -13,7 +13,7 @@ export const EstimateBody = () => {
         <>
           <TableHeader />
           {sections.map((section) => (
-            <EstimateSection key={section.id} />
+            <Section key={section.id} section={section} />
           ))}
         </>
       )}

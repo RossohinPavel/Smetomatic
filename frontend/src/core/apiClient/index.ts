@@ -110,7 +110,7 @@ export const createApiClient = (baseUrl: string) => {
     return request(props, { method: "PATCH" });
   };
 
-  const del = async <T>(props: DeleteRequestPropsType<T>): Promise<T> => {
+  const del = async (props: DeleteRequestPropsType): Promise<null> => {
     return request(props, { method: "DELETE" });
   };
 
@@ -188,6 +188,11 @@ export const createApiClient = (baseUrl: string) => {
     return post({ endpoint: "api/section/", body: data, schema: SectionSchema, auth: true });
   };
 
+  // Удаление секции.
+  const deleteSection = async (id: string | number) => {
+    return del({ endpoint: `api/section/${id}`, auth: true });
+  };
+
   return {
     getAppUpdates,
     getAppLatestUpdate,
@@ -202,6 +207,7 @@ export const createApiClient = (baseUrl: string) => {
     updateEstimate,
     deleteEstimate,
     createSection,
+    deleteSection,
   };
 };
 

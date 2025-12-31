@@ -33,7 +33,7 @@ const Estimate = () => {
   }
 
   return (
-    <EstimateContextProvider data={data}>
+    <EstimateContextProvider estimate={data}>
       <Actions />
       <EstimateHeader />
       <EstimateBody />

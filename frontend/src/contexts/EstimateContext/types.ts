@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 
 export interface EstimateProviderProps {
-  data: EstimateSchemaType;
+  estimate: EstimateSchemaType;
   children: ReactNode;
 }
 
@@ -20,4 +20,5 @@ export interface EstimateContextType extends EstimateSchemaType {
   updateEstimate: UpdateEstimate;
   deleteEstimate: () => void;
   addSection: () => void;
+  deleteSection: (id: number) => void;
 }
