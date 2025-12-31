@@ -7,8 +7,16 @@ export interface EstimateProviderProps {
   children: ReactNode;
 }
 
-export interface EstimateContextType {
-  estimate: EstimateSchemaType;
-  setEstimate: (estimate: EstimateSchemaType) => void;
-  renewUpdatedAt: () => void;
+type UpdateEstimateKeys = Exclude<keyof EstimateSchemaType, "id" | "createdAt" | "sections">;
+
+export type UpdateEstimate = <T extends UpdateEstimateKeys>(
+  prop: T,
+  value: EstimateSchemaType[T]
+) => void;
+
+export interface EstimateContextType extends EstimateSchemaType {
+  totalAmount: number;
+  isSectionsExists: boolean;
+  updateEstimate: UpdateEstimate;
+  addSection: () => void;
 }

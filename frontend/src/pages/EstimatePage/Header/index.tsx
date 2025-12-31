@@ -1,26 +1,11 @@
 import css from "./index.module.scss";
 import { DebouncedChangeField } from "../../../components/DebouncedChangeField";
+import type { Callback } from "../../../components/DebouncedChangeField/types";
 import { useEstimateContext } from "../../../contexts/EstimateContext/context";
-import { apiClient } from "../../../core/apiClient";
-import { useCallback } from "react";
 
 
 export const EstimateHeader = () => {
-  const { estimate, renewUpdatedAt } = useEstimateContext();
-
-  const updateEstimateInfo = useCallback(
-    (key: string, value: unknown) => {
-      const data = { [key]: value };
-      apiClient
-        .updateEstimate(estimate.id, data)
-        .then(() => {
-          console.info("Attr updated", data);
-          renewUpdatedAt();
-        })
-        .catch((err) => console.error(err));
-    },
-    [estimate.id, renewUpdatedAt]
-  );
+  const { title, description, project, basedOn, updatedAt, updateEstimate } = useEstimateContext();
 
   return (
     <div className={css["estimate-header"]}>
@@ -28,8 +13,8 @@ export const EstimateHeader = () => {
         <div>О смете</div>
         <DebouncedChangeField
           attr="description"
-          value={estimate.description}
-          callback={updateEstimateInfo}
+          value={description}
+          callback={updateEstimate as Callback}
         >
           <textarea
             className={css.textarea}
@@ -52,7 +37,7 @@ export const EstimateHeader = () => {
       <div>
         <div className={css.meta}>
           <div>Смета</div>
-          <DebouncedChangeField attr="title" value={estimate.title} callback={updateEstimateInfo}>
+          <DebouncedChangeField attr="title" value={title} callback={updateEstimate as Callback}>
             <input />
           </DebouncedChangeField>
         </div>
@@ -60,8 +45,8 @@ export const EstimateHeader = () => {
           <div>Объект</div>
           <DebouncedChangeField
             attr="project"
-            value={estimate.project}
-            callback={updateEstimateInfo}
+            value={project}
+            callback={updateEstimate as Callback}
           >
             <input />
           </DebouncedChangeField>
@@ -70,8 +55,8 @@ export const EstimateHeader = () => {
           <div>Основание</div>
           <DebouncedChangeField
             attr="basedOn"
-            value={estimate.basedOn}
-            callback={updateEstimateInfo}
+            value={basedOn}
+            callback={updateEstimate as Callback}
           >
             <input />
           </DebouncedChangeField>
@@ -82,7 +67,7 @@ export const EstimateHeader = () => {
         </div>
         <div className={css.meta}>
           <div>Дата составления</div>
-          <div>{estimate.updatedAt.toLocaleDateString()}</div>
+          <div>{updatedAt.toLocaleDateString()}</div>
         </div>
       </div>
     </div>

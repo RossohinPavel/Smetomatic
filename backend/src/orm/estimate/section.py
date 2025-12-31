@@ -1,4 +1,4 @@
-from sqlalchemy import func, insert, literal, select
+from sqlalchemy import insert, literal, select
 
 from src.models import Estimate, Section
 from src.orm._base import BaseRepository
@@ -13,16 +13,7 @@ class SectionRepository(BaseRepository):
     async def create_section(self, user_id: int, data: CreateSectionSchema) -> Section | None:
         """Создаем раздел сметы"""
         subquery = (
-            select(
-                Estimate.id,
-                literal(data.title),
-                (
-                    select(func.count())
-                    .select_from(Section)
-                    .where(Section.estimate_id == data.estimate_id)
-                    .scalar_subquery()
-                ),
-            )
+            select(Estimate.id, literal(data.title), literal(data.sort_index))
             .select_from(Estimate)
             .where(Estimate.user_id == user_id)
             .where(Estimate.id == data.estimate_id)

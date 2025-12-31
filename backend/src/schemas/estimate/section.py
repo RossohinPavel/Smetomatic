@@ -8,10 +8,10 @@ class CreateSectionSchema(BaseModel):
 
     estimate_id: int = Field(alias="estimateId")
     title: str = Field(default="Новый раздел")
+    sort_index: int = Field(alias="sortIndex")
 
 
 class SectionSchema(CreateSectionSchema):
     """Схема для описания раздела сметы."""
 
     id: int
-    sort_index: int = Field(alias="sortIndex")
