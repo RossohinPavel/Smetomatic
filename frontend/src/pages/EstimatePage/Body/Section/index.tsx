@@ -1,5 +1,7 @@
 import { EstimateItem } from "../EstimateItem";
 import css from "./index.module.scss";
+import { DebouncedChangeField } from "../../../../components/DebouncedChangeField";
+import type { Callback } from "../../../../components/DebouncedChangeField/types";
 import { useSectionContext } from "../../../../contexts/SectionContext/context";
 import { SectionContextProvider } from "../../../../contexts/SectionContext/provider";
 import type { SectionSchemaType } from "../../../../core/schemas";
@@ -7,14 +9,16 @@ import React from "react";
 
 
 export const C = () => {
-  const { title, materialAmount, workAmount, totalAmount, sortIndex, deleteSection } =
+  const { title, materialAmount, workAmount, totalAmount, updateSection, deleteSection } =
     useSectionContext();
 
   return (
     <div className={css.section}>
       <div className={css.header}>
         <div className={css.name}>
-          <input type="text" defaultValue={`${title} - ${sortIndex}`} />
+          <DebouncedChangeField attr="title" value={title} callback={updateSection as Callback}>
+            <input type="text" defaultValue={title} />
+          </DebouncedChangeField>
         </div>
         <div className={css.filler}></div>
         <div className={css.actions}>

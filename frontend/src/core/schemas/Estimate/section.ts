@@ -9,3 +9,10 @@ export const SectionSchema = z.object({
 });
 
 export type SectionSchemaType = z.infer<typeof SectionSchema>;
+
+export const UpdateSectionSchema = z.object({
+  title: z.string().optional(),
+  sorIndex: z.number().optional(),
+});
+
+export type UpdateSectionSchemaType = z.infer<typeof UpdateSectionSchema>;

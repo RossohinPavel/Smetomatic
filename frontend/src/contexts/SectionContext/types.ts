@@ -11,6 +11,13 @@ export interface SectionContextType extends SectionSchemaType {
   materialAmount: number;
   workAmount: number;
   totalAmount: number;
-  setTitle: (title: string) => void;
   deleteSection: () => void;
+  updateSection: UpdateSection;
 }
+
+type UpdateSectionKeys = "title" | "sortIndex";
+
+export type UpdateSection = <T extends UpdateSectionKeys>(
+  prop: T,
+  value: SectionSchemaType[T]
+) => void;

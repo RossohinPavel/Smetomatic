@@ -1,4 +1,4 @@
-import type { EstimateSchemaType } from "../../core/schemas";
+import type { EstimateSchemaType, UpdateSectionSchemaType } from "../../core/schemas";
 import type { ReactNode } from "react";
 
 
@@ -14,11 +14,14 @@ export type UpdateEstimate = <T extends UpdateEstimateKeys>(
   value: EstimateSchemaType[T]
 ) => void;
 
+export type UpdateSection = (id: number, data: UpdateSectionSchemaType) => void;
+
 export interface EstimateContextType extends EstimateSchemaType {
   totalAmount: number;
   isSectionsExists: boolean;
   updateEstimate: UpdateEstimate;
   deleteEstimate: () => void;
   addSection: () => void;
+  updateSection: UpdateSection;
   deleteSection: (id: number) => void;
 }

@@ -7,6 +7,7 @@ from .estimate import (
     EstimateSchema,
     SectionSchema,
     UpdateEstimateSchema,
+    UpdateSectionSchema,
 )
 from .requests import EstimatesRequestQuerySchema
 from .responses import EstimateListResponseSchema

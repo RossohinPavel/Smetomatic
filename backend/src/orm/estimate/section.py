@@ -1,8 +1,8 @@
-from sqlalchemy import delete, insert, literal, select
+from sqlalchemy import delete, insert, literal, select, update
 
 from src.models import Estimate, Section
 from src.orm._base import BaseRepository
-from src.schemas import CreateSectionSchema
+from src.schemas import CreateSectionSchema, UpdateSectionSchema
 
 from .estimate import EstimateRepository
 
@@ -38,6 +38,21 @@ class SectionRepository(BaseRepository):
             .where(Section.id == section_id)
             .where(Section.estimate_id == Estimate.id)
             .where(Estimate.user_id == user_id)
+        )
+        result = await self.session.execute(stmt)
+        rowcount: int = result.rowcount  # type: ignore
+        if rowcount > 0:
+            await self.session.commit()
+        return rowcount
+
+    async def update_section(self, user_id: int, section_id: int, data: UpdateSectionSchema) -> int:
+        """Обновление раздела сметы"""
+        stmt = (
+            update(Section)
+            .where(Section.id == section_id)
+            .where(Section.estimate_id == Estimate.id)
+            .where(Estimate.user_id == user_id)
+            .values(**data.get_initialized_fields())
         )
         result = await self.session.execute(stmt)
         rowcount: int = result.rowcount  # type: ignore

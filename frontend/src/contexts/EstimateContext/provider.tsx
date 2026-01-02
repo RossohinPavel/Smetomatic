@@ -1,6 +1,7 @@
 import { EstimateContext } from "./context";
-import type { EstimateProviderProps, UpdateEstimate } from "./types";
+import type { EstimateProviderProps, UpdateEstimate, UpdateSection } from "./types";
 import { apiClient } from "../../core/apiClient";
+import type { UpdateSectionSchemaType } from "../../core/schemas";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 
@@ -105,6 +106,26 @@ export const EstimateContextProvider = ({ estimate, children }: EstimateProvider
       });
   }, [id]);
 
+  const updateSection = useCallback<UpdateSection>((id, data) => {
+    let section;
+    setSections((prev) =>
+      prev.map((s) => {
+        if (s.id === id) {
+          section = { ...s, ...data };
+          return section;
+        } else {
+          return s;
+        }
+      })
+    );
+    apiClient
+      .updateSection(id, data as UpdateSectionSchemaType)
+      .then(() => {
+        console.info(`Section id=`, id, `was updated`);
+      })
+      .catch((e) => console.warn(e));
+  }, []);
+
   const deleteSection = useCallback((id: number) => {
     setSections((prev) => prev.filter((s) => s.id !== id));
     apiClient
@@ -138,6 +159,7 @@ export const EstimateContextProvider = ({ estimate, children }: EstimateProvider
         deleteEstimate,
         addSection,
         deleteSection,
+        updateSection,
       }}
     >
       {children}

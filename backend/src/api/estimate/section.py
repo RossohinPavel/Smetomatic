@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from src.api.middleware import validate_token
 from src.core import get_base_session
 from src.orm import SectionRepository
-from src.schemas import CreateSectionSchema, SectionSchema, TokenDataSchema
+from src.schemas import CreateSectionSchema, SectionSchema, TokenDataSchema, UpdateSectionSchema
 
 
 router = APIRouter(prefix="/section", tags=["Estimate"])
@@ -30,5 +30,19 @@ async def delete_section(
     """Удаление раздела сметы"""
     repo = SectionRepository(session)
     result = await repo.delete_section(token.user_id, id)
+    if not result:
+        raise HTTPException(404, "Section not found.")
+
+
+@router.patch("/{id}", status_code=204)
+async def update_section(
+    id: int,
+    data: UpdateSectionSchema,
+    token: TokenDataSchema = Depends(validate_token()),
+    session=Depends(get_base_session),
+):
+    """Обновление раздела сметы"""
+    repo = SectionRepository(session)
+    result = await repo.update_section(token.user_id, id, data)
     if not result:
         raise HTTPException(404, "Section not found.")

@@ -20,6 +20,7 @@ import type {
   InfoSchemaType,
   SectionSchemaType,
   UpdateEstimateSchemaType,
+  UpdateSectionSchemaType,
   UserAuthSchemaType,
   UserDataSchemaType,
 } from "../schemas";
@@ -193,6 +194,11 @@ export const createApiClient = (baseUrl: string) => {
     return del({ endpoint: `api/section/${id}`, auth: true });
   };
 
+  // Обновление раздела.
+  const updateSection = async (id: string | number, data: UpdateSectionSchemaType) => {
+    return path({ endpoint: `api/section/${id}`, body: data, auth: true });
+  };
+
   return {
     getAppUpdates,
     getAppLatestUpdate,
@@ -208,6 +214,7 @@ export const createApiClient = (baseUrl: string) => {
     deleteEstimate,
     createSection,
     deleteSection,
+    updateSection,
   };
 };
 
